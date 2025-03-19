@@ -9,7 +9,10 @@ app.get('/bing', async (req, res) => {
     const { prompt } = req.query;
     if (!prompt) return res.status(400).json({ error: "Prompt is required" });
 
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+    executablePath: '/usr/bin/chromium-browser',
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
     const page = await browser.newPage();
 
     try {
